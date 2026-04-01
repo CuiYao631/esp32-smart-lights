@@ -27,8 +27,8 @@
 // ============================================================
 
 // WiFi STA 模式配置
-const char* WIFI_SSID     = "infiprimes";
-const char* WIFI_PASSWORD = "zhongmao15ZZ";
+const char* WIFI_SSID     = "XcHome";
+const char* WIFI_PASSWORD = "Cui123456";
 
 // ============================================================
 //  setup & loop
@@ -64,5 +64,6 @@ void setup() {
 void loop() {
   server.handleClient();
   updateLedEffect();
+  updateServos();
   updateAction();
 }

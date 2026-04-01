@@ -59,18 +59,18 @@ const Keyframe FRAMES_WAVE[] = {
 
 // --- 跳舞 ---
 const Keyframe FRAMES_DANCE[] = {
-  {{  60,    120,     60,     45  },  300},
-  {{ 120,     60,    120,    135  },  300},
-  {{  60,    120,     60,     45  },  300},
-  {{ 120,     60,    120,    135  },  300},
-  {{  45,     90,    150,     90  },  250},
-  {{ 135,     90,     30,     90  },  250},
-  {{  45,     90,    150,     90  },  250},
-  {{ 135,     90,     30,     90  },  250},
-  {{  90,     60,     90,     45  },  300},
-  {{  90,    120,     90,    135  },  300},
-  {{  90,     60,     90,     45  },  300},
-  {{  90,     90,     90,     90  },  500},
+  {{  75,    105,     75,     68  },  500},
+  {{ 105,     75,    105,    112  },  500},
+  {{  75,    105,     75,     68  },  500},
+  {{ 105,     75,    105,    112  },  500},
+  {{  68,     90,    120,     90  },  450},
+  {{ 112,     90,     60,     90  },  450},
+  {{  68,     90,    120,     90  },  450},
+  {{ 112,     90,     60,     90  },  450},
+  {{  90,     75,     90,     68  },  500},
+  {{  90,    105,     90,    112  },  500},
+  {{  90,     75,     90,     68  },  500},
+  {{  90,     90,     90,     90  },  800},
 };
 
 // --- 伸懒腰 ---
@@ -174,17 +174,18 @@ void updateAction() {
       actionLoopsLeft--;
       if (actionLoopsLeft <= 0) {
         actionPlaying = false;
-        Serial.println("[动作] 播放完毕");
+        resetAllServos();
+        Serial.println("[动作] 播放完毕, 归零中...");
         return;
       }
       actionFrameIdx = 0;
     }
 
-    // 应用当前帧
+    // 应用当前帧 (平滑移动)
     const Keyframe& kf = actionCurrent->frames[actionFrameIdx];
     for (int i = 0; i < SERVO_COUNT; i++) {
       if (kf.angles[i] >= 0) {
-        setServoAngle(i, kf.angles[i]);
+        setServoTarget(i, kf.angles[i]);
       }
     }
     actionFrameStart = now;
